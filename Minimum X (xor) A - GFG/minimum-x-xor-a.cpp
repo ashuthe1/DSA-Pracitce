@@ -49,11 +49,11 @@ class Solution {
             i--;
         }
         // deb2(ans,bits)
-        while(bits > 0)
-        {
-            ans = '1' + ans;
-            bits--;
-        }
+        // while(bits > 0)
+        // {
+        //     ans = '1' + ans;
+        //     bits--;
+        // }
         int x = 0;
         sz = ans.size();
         for(i = sz-1; i >= 0; i--)
