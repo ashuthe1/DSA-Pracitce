@@ -31,39 +31,31 @@ public:
 class Solution {
   public:
     int solve(int n, int k, vector<int> &arr) 
-{
-    vector<int>div;
-    int sum = 0, ans = 0;
-    for(int e : arr) sum += e;
-
-    for(int i = 1; i*i <= sum; i++)
     {
-        if(sum%i == 0)
+        vector<int>div;
+        int sum = 0, ans = 0;
+        for(int e : arr) sum += e;
+    
+        for(int i = 1; i*i <= sum; i++)
         {
-            div.push_back(i);
-            if(sum/i != i) div.push_back(sum/i);
-        }
-    }
-    // deb2(sum,div)
-    // sort(div.begin(),div.end());
-    for(int i = 0; i < (int)div.size(); i++)
-    {
-        int cur = 0, sum = 0;
-        // deb(div[i])
-        for(int j = 0; j < n; j++)
-        {
-            sum += arr[j];
-            // deb2(sum,cur)
-            if(cur != k-1 && sum%div[i] == 0)
+            if(sum%i == 0)
             {
-                sum = 0;
-                cur++;
+                div.push_back(i);
+                if(sum/i != i) div.push_back(sum/i);
             }
         }
-        if((cur == k-1) && (sum != 0 && sum%div[i] == 0)) ans = max(ans,div[i]);
+        // deb2(sum,div)
+        // sort(div.begin(),div.end());
+        for(int i = 1; i < n; i++) arr[i] += arr[i-1];
+        
+        for(int i = 0; i < (int)div.size(); i++)
+        {
+            int cur = 0;
+            for(int e : arr) if(e%div[i] == 0) cur++;
+            if(cur >= k) ans = max(ans,div[i]);
+        }
+        return ans;
     }
-    return ans;
-}
 };
 
 
