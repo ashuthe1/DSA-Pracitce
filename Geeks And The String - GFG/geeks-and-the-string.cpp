@@ -6,22 +6,15 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    string removePair(string &s) {
-        int n = s.size();
-        stack<char>st;
-        
-        for(int i = 0; i < n; i++)
-        {
-            if(!st.empty() && s[i] == st.top()) st.pop();
-            else st.push(s[i]);
-        }
+    string removePair(string s) {
         string ans = "";
-        
-        while(!st.empty()) ans += st.top(), st.pop();
-        reverse(ans.begin(),ans.end());
-        
-        if(!ans.size()) return "-1";
-        return ans;
+        for(auto e : s)
+        {
+            if(ans.size() && e == ans.back()) ans.pop_back();
+            else ans += e;
+        }
+        if(ans.size()) return ans;
+        return "-1";
     }
 };
 
