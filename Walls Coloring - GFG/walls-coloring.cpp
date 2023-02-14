@@ -10,38 +10,27 @@ using namespace std;
 
 class Solution{   
 public:
-    vector<vector<int>>dp;
-    int func(int i, int k, vector<vector<int>> &v, int n)
+    int minCost(vector<vector<int>> &v, int n) 
     {
-        if(i == n) return 0;
-        if(dp[i][k] != -1) return dp[i][k];
-        int ans = INT_MAX;
-        if(k == 0)
+        vector<vector<int>>dp(n+2,vector<int>(4,0));
+        // dp[i][j] -> minimum cost to paint till ith wall if ith wall is painted as j color
+        for(int i = 0; i < n; i++)
         {
-            ans = min(ans,func(i+1,1,v,n)+v[i][0]);
-            ans = min(ans,func(i+1,2,v,n)+v[i][1]);
-            ans = min(ans,func(i+1,3,v,n)+v[i][2]);
+            if(i == 0)
+            {
+                for(int j = 0; j < 3; j++)
+                dp[0][j] = v[0][j];
+            }
+            else{
+                for(int j = 0; j < 3; j++)
+                {
+                    if(j == 0) dp[i][0] = min(dp[i-1][1],dp[i-1][2])+v[i][0];
+                    else if(j == 1) dp[i][1] = min(dp[i-1][0],dp[i-1][2])+v[i][1];
+                    else dp[i][2] = min(dp[i-1][0],dp[i-1][1])+v[i][2];
+                }
+            }
         }
-        else if(k == 1)
-        {
-            ans = min(ans,func(i+1,2,v,n)+v[i][1]);
-            ans = min(ans,func(i+1,3,v,n)+v[i][2]);
-        }
-        else if(k == 2)
-        {
-            ans = min(ans,func(i+1,1,v,n)+v[i][0]);
-            ans = min(ans,func(i+1,3,v,n)+v[i][2]);
-        }
-        else{
-            ans = min(ans,func(i+1,1,v,n)+v[i][0]);
-            ans = min(ans,func(i+1,2,v,n)+v[i][1]);
-        }
-        return dp[i][k] =  ans;
-    }
-    int minCost(vector<vector<int>> &colors, int N) 
-    {
-        dp.resize(N+1,vector<int>(4,-1));
-        return func(0,0,colors,N);
+        return min({dp[n-1][0],dp[n-1][1],dp[n-1][2]});
     }
 };
 
