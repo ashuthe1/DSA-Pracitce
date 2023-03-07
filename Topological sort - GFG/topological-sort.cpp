@@ -8,6 +8,7 @@ class Solution
 	public:
 	//Function to return list containing vertices in Topological order. 
 	vector<vector<int>>adj;
+    vector<int>inDegree, topo;
     vector<bool>vis;
     stack<int>st;
     void topologicalSortDFS(int node)
@@ -19,23 +20,47 @@ class Solution
         }
         st.push(node);
     }
+    void topologicalSortBFS(int n)
+    {
+        queue<int>q;
+        for(int i = 0; i < n; i++)
+        {
+            if(inDegree[i] == 0) q.push(i);
+        }
+    
+        while(!q.empty())
+        {
+            int node = q.front(); q.pop();
+            topo.push_back(node);
+    
+            for(int child : adj[node])
+            {
+                inDegree[child]--;
+                if(inDegree[child] == 0) q.push(child);
+            }
+        }
+    }
     vector<int> topoSort(int V, vector<int> g[]) 
     {
         adj.clear(); adj.resize(V);
         vis.clear(); vis.resize(V, false);
+        inDegree.clear(); inDegree.resize(V,0);
     
         for(int i = 0; i < V; i++)
         {
             for(int child : g[i])
+            {
                 adj[i].push_back(child);
+                inDegree[child]++;
+            }
         }
     
-        for(int i = 0; i < V; i++)
-        {
-            if(!vis[i]) topologicalSortDFS(i);
-        }
-        vector<int>topo;
-        while(!st.empty()) topo.push_back(st.top()), st.pop();
+        // for(int i = 0; i < V; i++)
+        // {
+        //     if(!vis[i]) topologicalSortDFS(i);
+        // }
+        topologicalSortBFS(V);
+        // while(!st.empty()) topo.push_back(st.top());
         return topo;
     }
 };
