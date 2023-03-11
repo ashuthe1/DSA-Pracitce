@@ -15,8 +15,7 @@ public:
         int indx = 0, mx = 0;
         for(int i = 0; i < N; i++)
         {
-            int c = 0;
-            for(int j = 0; j <N; j++) if(mat[i][j] == 1) c++;
+            auto c = N-(upper_bound(mat[i].begin(), mat[i].end(), 0)-mat[i].begin());
             
             if(c > mx)
             {
