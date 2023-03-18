@@ -31,7 +31,7 @@ public:
 class Solution {
   public:
     vector<int> getDistinctDifference(int n, vector<int> &v) {
-        map<int, int>left, right;
+        unordered_map<int, int>left, right;
         for(int i = n-1; i >= 0; i--) right[v[i]]++;
         
         vector<int>ans(n);
