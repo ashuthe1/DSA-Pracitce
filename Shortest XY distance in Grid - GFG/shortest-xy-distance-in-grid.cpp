@@ -9,51 +9,68 @@ using namespace std;
 class Solution {
   public:
     bool isValid(int i, int j, int n, int m)
+{
+    return (i >= 0 && j >= 0 && i < n && j < m);
+}
+int shortestXYDist(vector<vector<char>> v, int n, int m) 
+{
+    queue<pair<int,int>>q;
+    vector<vector<int>>dist(n,vector<int>(m,-1));
+
+    for(int i = 0; i < n; i++)
     {
-        return (i >= 0 && j >= 0 && i < n && j < m);
+        for(int j = 0; j < m; j++)
+        {
+            if(v[i][j] == 'X')
+            {
+                q.push({i,j});
+                dist[i][j] = 0;
+            }
+        }
     }
-    vector<pair<int, int>> adj = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    int shortestXYDist(vector<vector<char>> v, int n, int m) {
-        queue<pair<int, int>> q;
-        vector<vector<int>> dist(n, vector<int>(m, -1));
-        
-        for(int i = 0; i < n; i++)
+
+    while(!q.empty())
+    {
+        auto top = q.front();
+        q.pop();
+
+        int i = top.first, j = top.second;
+        // down
+        if(isValid(i+1, j, n, m) && dist[i+1][j] == -1)
         {
-            for(int j = 0; j < m; j++)
-            {
-                if(v[i][j] == 'X'){
-                    q.push({i,j});
-                    dist[i][j] = 0;
-                }
-            }
+            dist[i+1][j] = dist[i][j] + 1;
+            q.push({i+1, j});
         }
-        
-        while(!q.empty())
+        // up
+        if(isValid(i-1, j, n, m) && dist[i-1][j] == -1)
         {
-            auto top = q.front();
-            q.pop();
-            
-            for(auto &move : adj)
-            {
-                int X = top.first + move.first, Y = top.second + move.second;
-                if(isValid(X, Y, n, m) && dist[X][Y] == -1){
-                    dist[X][Y] = dist[top.first][top.second] + 1;
-                    q.push({X, Y});
-                }
-            }
+            dist[i-1][j] = dist[i][j] + 1;
+            q.push({i-1, j});
         }
-        int distance = 1e7;
-        for(int i = 0; i < n; i++)
+        // right
+        if(isValid(i, j+1, n, m) && dist[i][j+1] == -1)
         {
-            for(int j = 0; j < m; j++)
-            {
-                if(v[i][j] == 'Y' && dist[i][j] < distance){
-                    distance = dist[i][j];
-                }
-            }
+            dist[i][j+1] = dist[i][j] + 1;
+            q.push({i, j+1});
         }
-        return distance;
+        //left
+        if(isValid(i, j-1, n, m) && dist[i][j-1] == -1)
+        {
+            dist[i][j-1] = dist[i][j] + 1;
+            q.push({i, j-1});
+        }
     }
+
+    int ans = INT_MAX;
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < m; j++)
+        {
+            if(v[i][j] == 'Y') ans = min(ans, dist[i][j]);
+        }
+    }
+    return ans;
+}
 };
 
 //{ Driver Code Starts.
