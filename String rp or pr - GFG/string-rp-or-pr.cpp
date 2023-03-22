@@ -14,6 +14,7 @@ public:
             swap(X, Y);
             swap(a, b);
         }
+        
         ll n = s.size(), ans = 0;
         stack<char>st;
         for(int i = 0; i < n; i++)
@@ -27,11 +28,12 @@ public:
                 st.push(s[i]);
             }
         }
+        
         string rem = "";
         while(!st.empty()) rem += st.top(), st.pop();
-        // cout << rem;
         reverse(rem.begin(), rem.end());
         n = rem.size();
+        
         for(int i = 0; i < n; i++)
         {
             if(rem[i] == b[1] && !st.empty() && st.top() == b[0])
