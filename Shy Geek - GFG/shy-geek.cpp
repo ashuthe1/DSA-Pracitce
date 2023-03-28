@@ -41,7 +41,8 @@ Instructions -
 */
 using ll = long long;
 class Solution{
-    public : 
+    public:
+    
     Shop shop;
     Solution(Shop s)
     {
@@ -54,7 +55,7 @@ class Solution{
             ll prev = 0;
             while(lo <= hi)
             {
-                ll mid = lo + (hi - lo)/2;
+                ll mid = (lo+hi)/2;
                 ll val = shop.get(mid);
                 
                 if(val > k) hi = mid-1;
@@ -63,12 +64,13 @@ class Solution{
             
             if(prev == 0) break;
             
-            ans += k/prev;
+            ans += (k/prev);
             k %= prev;
             lo = 0;
         }
         return ans;
     }
+
 };
 
 //{ Driver Code Starts.
