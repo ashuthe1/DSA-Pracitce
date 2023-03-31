@@ -9,8 +9,8 @@ using namespace std;
 
 class Solution {
   public:
-    long long int minOperations(int n) {
-        return n*1LL*n/4;
+    long long int minOperations(int N) {
+        return N*1LL*N/4;
     }
 };
 
