@@ -16,12 +16,11 @@ public:
     int xmod11(string x)
     {
        int rem = 0, n = x.size();
-       
        for(int i = 0; i < n; i++)
        {
-           rem = (rem *10 + x[i] - '0') % 11;
+           rem = (rem*10 + x[i] - '0') % 11;
        }
-       return rem;
+        return rem;
     }
 };
 
