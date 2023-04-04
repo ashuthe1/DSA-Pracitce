@@ -9,19 +9,26 @@ using namespace std;
 
 class Solution {
   public:
-    int countSpecialNumbers(int n, vector<int> v) {
-        int mx = *max_element(v.begin(), v.end()), ans = 0;
-        vector<int>vis(mx+2, 0), fr(mx+2, 0), marked(mx+2, 0);
+    int countSpecialNumbers(int n, vector<int> arr) {
+        int maxx = INT_MIN, count = 0;
+        for(int &e : arr) maxx = max(e, maxx);
+        vector<int>freq(maxx+2, 0);
+        vector<bool>vis(maxx+2, 0), special(maxx+2, 0);
+        
         for(int i = 0; i < n; i++)
         {
-            fr[v[i]]++;
-            if(marked[v[i]]) continue;
-            marked[v[i]] = 1;
-            for(int j = 2*v[i]; j <= mx; j += v[i]) vis[j] = 1;
-        }
+            freq[arr[i]]++;
+            if(vis[arr[i]]) continue;
+            vis[arr[i]] = 1;
             
-        for(int &e : v) if(vis[e] || fr[e] > 1) ans++;
-        return ans;
+            for(int j = 2*arr[i]; j <= maxx; j += arr[i]) special[j] = 1;
+        }
+        
+        for(int &e : arr)
+        {
+            if(freq[e] > 1 || special[e]) count++;
+        }
+        return count;
     }
 };
 
