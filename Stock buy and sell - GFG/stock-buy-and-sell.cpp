@@ -34,7 +34,6 @@ void stockBuySell(int v[], int n) {
     vector<pair<int,int>> ans;
     for(int i = 1; i < n; i++)
     {
-        // deb(i,prev, mx, pInd, mInd);
         if(v[i] < mx)
         {
             if(pInd != mInd){
@@ -49,11 +48,8 @@ void stockBuySell(int v[], int n) {
             }
         }
         else{
-            if(v[i] > mx)
-            {
-                mx = v[i];
-                mInd = i;
-            }
+            mx = v[i];
+            mInd = i;
         }
     }
     if(pInd != mInd){
