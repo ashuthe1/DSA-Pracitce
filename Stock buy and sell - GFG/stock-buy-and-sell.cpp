@@ -24,11 +24,6 @@ int main() {
 }
 
 // } Driver Code Ends
-
-
-// User function template for C++
-
-// This function finds the buy sell schedule for maximum profit
 void stockBuySell(int v[], int n) {
     int prev = v[0], mx = v[0], pInd = 0, mInd = 0;
     vector<pair<int,int>> ans;
@@ -52,18 +47,8 @@ void stockBuySell(int v[], int n) {
             mInd = i;
         }
     }
-    if(pInd != mInd){
-        ans.push_back({pInd, mInd});
-    }
-    int N = ans.size();
-    if(N == 0)
-    {
-        cout << "No Profit\n";
-        return;
-    }
-    for(int i = 0; i < N; i++)
-    {
-        cout << "(" << ans[i].first << " " << ans[i].second << ") ";
-    }
+    if(pInd != mInd) ans.push_back({pInd, mInd});
+    if(ans.size() == 0) {cout << "No Profit\n"; return;}
+    for(auto &e : ans) cout << "(" << e.first << " " << e.second << ") ";
     cout << "\n";
 }
